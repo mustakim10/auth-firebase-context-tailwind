@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProviders';
+import { Result } from 'postcss';
 
 const Login = () => {
+
+    const {signIn} = useContext(AuthContext);
 
 const handleLogin = event => {
 event.preventDefault();
@@ -10,6 +14,15 @@ event.preventDefault();
     const email = form.email.value ;
     const password = form.password.value ;
     console.log(email,password);
+
+    signIn(email,password)
+    .then(result => {
+        const loggedUser = result.user ;
+        console.log(loggedUser) ;
+    })
+    .catch(error => {
+        console.log(error);
+    })
 }
 
     return (
@@ -41,7 +54,7 @@ event.preventDefault();
                         </div>
                     </form>
                     <label className="label">
-                                <Link to="/login" className="label-text-alt link link-hover">New to Auth master? Please Register</Link>
+                                <Link to="/register" className="label-text-alt link link-hover">New to Auth master? Please Register</Link>
                             </label>
                 </div>
             </div>
