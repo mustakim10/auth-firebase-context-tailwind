@@ -5,7 +5,7 @@ import { Result } from 'postcss';
 
 const Login = () => {
 
-    const {signIn} = useContext(AuthContext);
+    const {signIn,signInWithGoogle} = useContext(AuthContext);
 
 const handleLogin = event => {
 event.preventDefault();
@@ -19,6 +19,18 @@ event.preventDefault();
     .then(result => {
         const loggedUser = result.user ;
         console.log(loggedUser) ;
+        form.reset();
+    })
+    .catch(error => {
+        console.log(error);
+    })
+}
+
+const handleGoogleSignIn = () => {
+    signInWithGoogle()
+    .then(result => {
+        const loggedUser = result.user ;
+        console.log(loggedUser);
     })
     .catch(error => {
         console.log(error);
@@ -56,6 +68,9 @@ event.preventDefault();
                     <label className="label">
                                 <Link to="/register" className="label-text-alt link link-hover">New to Auth master? Please Register</Link>
                             </label>
+                            <div>
+                            <button onClick={handleGoogleSignIn} className="btn btn-primary">Sign In with Google</button>
+                            </div>
                 </div>
             </div>
         </div>
